@@ -42,5 +42,12 @@ class Room
     end
   end
 
+  def guest_fav_song(guest)
+    if @songs.include?(guest.fav_song)
+      return "Whoop Whoop!"
+    else
+      return "Boo!"
+    end
+  end
 
 end
