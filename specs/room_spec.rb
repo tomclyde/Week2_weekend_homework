@@ -15,6 +15,7 @@ class TestRoom < Minitest::Test
     @guest_ryan = Guest.new("Ryan")
     @song_jump = Song.new("Jump")
     @song_hey_jude = Song.new("Hey Jude")
+    @song_perfect = Song.new("Perfect")
     @song_we_will_rock_you = Song.new("We will rock you")
     @room_2 = Room.new("Rock_Room", [@song_jump,@song_hey_jude, @song_we_will_rock_you],
                        [@guest_tom, @guest_louise, @guest_ryan])
@@ -55,6 +56,16 @@ class TestRoom < Minitest::Test
   def test_check_out_guest_from_room__middle_guest
     @room_2.check_out_guest_from_room(@guest_louise)
     assert_equal(false, @room_2.guests.include?(@guest_louise))
+  end
+
+  def test_add_song_to_room__empty_song_library
+    @room_1.add_song_to_room(@song_jump)
+    assert_equal(true, @room_1.songs.include?(@song_jump))
+  end
+
+  def test_add_song_to_room__populated_song_library
+    @room_2.add_song_to_room(@song_perfect)
+    assert_equal(true, @room_2.songs.include?(@song_perfect))
   end
 
 
