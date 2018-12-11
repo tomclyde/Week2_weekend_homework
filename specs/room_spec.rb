@@ -9,16 +9,17 @@ require 'pry'
 class TestRoom < Minitest::Test
 
   def setup
-    @room_1 = Room.new("Pop_Room", [], [])
+    @room_1 = Room.new("Pop_Room", [], [], 2)
     @guest_tom = Guest.new("Tom")
     @guest_louise = Guest.new("Louise")
     @guest_ryan = Guest.new("Ryan")
+    @guest_fiona = Guest.new("Fiona")
     @song_jump = Song.new("Jump")
     @song_hey_jude = Song.new("Hey Jude")
     @song_perfect = Song.new("Perfect")
     @song_we_will_rock_you = Song.new("We will rock you")
     @room_2 = Room.new("Rock_Room", [@song_jump,@song_hey_jude, @song_we_will_rock_you],
-                       [@guest_tom, @guest_louise, @guest_ryan])
+                       [@guest_tom, @guest_louise, @guest_ryan], 3)
   end
 
   def test_room_name
@@ -66,6 +67,16 @@ class TestRoom < Minitest::Test
   def test_add_song_to_room__populated_song_library
     @room_2.add_song_to_room(@song_perfect)
     assert_equal(true, @room_2.songs.include?(@song_perfect))
+  end
+
+  def test_room_capacity_breached
+    room_message = @room_2.check_in_guest_to_room(@guest_fiona)
+    assert_equal("Can't add guest, at max capacity", room_message)
+  end
+
+  def test_room_capacity_not_breached
+    room_message = @room_1.check_in_guest_to_room(@guest_fiona)
+    assert_equal("Guest added to room", room_message)
   end
 
 
