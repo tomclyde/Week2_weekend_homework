@@ -9,17 +9,17 @@ require 'pry'
 class TestRoom < Minitest::Test
 
   def setup
-    @room_1 = Room.new("Pop_Room", [], [], 2)
-    @guest_tom = Guest.new("Tom")
-    @guest_louise = Guest.new("Louise")
-    @guest_ryan = Guest.new("Ryan")
-    @guest_fiona = Guest.new("Fiona")
+    @room_1 = Room.new("Pop_Room", [], [], 2,15)
+    @guest_tom = Guest.new("Tom", 50.00)
+    @guest_louise = Guest.new("Louise", 10.00)
+    @guest_ryan = Guest.new("Ryan", 15.00)
+    @guest_fiona = Guest.new("Fiona", 23.00)
     @song_jump = Song.new("Jump")
     @song_hey_jude = Song.new("Hey Jude")
     @song_perfect = Song.new("Perfect")
     @song_we_will_rock_you = Song.new("We will rock you")
     @room_2 = Room.new("Rock_Room", [@song_jump,@song_hey_jude, @song_we_will_rock_you],
-                       [@guest_tom, @guest_louise, @guest_ryan], 3)
+                       [@guest_tom, @guest_louise, @guest_ryan], 3,10)
   end
 
   def test_room_name
@@ -77,6 +77,16 @@ class TestRoom < Minitest::Test
   def test_room_capacity_not_breached
     room_message = @room_1.check_in_guest_to_room(@guest_fiona)
     assert_equal("Guest added to room", room_message)
+  end
+
+  def test_guest_pays_room_fee__enough_money
+    @room_1.check_in_guest_to_room(@guest_fiona)
+    assert_equal(8.00, @guest_fiona.guest_money)
+  end
+
+  def test_guest_pays_room_fee__not_enough_money
+    @room_1.check_in_guest_to_room(@guest_louise)
+    assert_equal(10.00, @guest_louise.guest_money)
   end
 
 
