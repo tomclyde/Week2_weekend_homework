@@ -4,6 +4,8 @@ require_relative('../guest')
 require_relative('../song')
 require_relative('../room')
 require 'pry'
+require 'colorize'
+
 
 
 class TestRoom < Minitest::Test
@@ -108,6 +110,13 @@ class TestRoom < Minitest::Test
     #binding.pry
     hear_guest = @room_2.guest_fav_song(@guest_ryan)
     assert_equal("Boo!", hear_guest)
+  end
+
+  def test_playing_songs_and_singing
+    puts @room_2.flashing_output("Playing tunes!".blue)
+    puts @room_2.flashing_output("Singing Songs!".red)
+    having_a_good_time = true
+    assert_equal(true,having_a_good_time)
   end
 
 

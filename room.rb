@@ -50,4 +50,27 @@ class Room
     end
   end
 
+  def flashing_output(output)
+    message = output
+    backspace = "\b"
+    space = " "
+
+    backspace_array = []
+    space_array = []
+
+    length = message.length
+
+    length.times do
+        backspace_array << backspace
+        space_array << space
+      end
+
+    0.upto(3) do
+        print message
+        sleep 0.5
+        print backspace_array.join.to_s + space_array.join.to_s + backspace_array.join.to_s + backspace_array.join.to_s
+        sleep 0.5
+      end
+  end
+
 end
